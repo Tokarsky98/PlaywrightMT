@@ -16,9 +16,9 @@ export class LoginPage {
         
     }
 
-    async login(username: string, password: string) {
+    async login(login: string, password: string) {
         await this.page.goto('/');
-        await this.loginInput.fill(username);
+        await this.loginInput.fill(login);
         await this.passwordInput.fill(password);
         await this.loginButton.click();
     }
