@@ -10,6 +10,7 @@ dotevn.config({
  */
 const config: PlaywrightTestConfig = {
   testDir: './tests',
+  reporter: process.env.CI ? 'html' : 'list',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -19,7 +20,6 @@ const config: PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   //workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
   timeout: 2 * 60 * 1000,
   expect: {
     /**
