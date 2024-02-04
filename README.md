@@ -35,3 +35,7 @@ In case of failed tests, you can use `--retries=1` parameter to make sure if tes
 ### Limitations
 
 -   `.env.example` file has valid login and password. It is caused by CI configuration which creates copy of this file and calls it `.env`. It solves problem with `dot.env` on CI. On `https://www.saucedemo.com/` website you can find other credentials but for now they are configured for `standard_user`.
+
+## Rules - draft
+
+1. Use `Conventional Commits` to make commits more readable and organized
