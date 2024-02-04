@@ -13,7 +13,7 @@ export class InventoryPage {
         this.logoutLink = page.locator('#logout_sidebar_link');
     }
 
-    async logout() {
+    async logout(): Promise<void> {
         await this.burgerMenu.click();
         await this.logoutLink.click();
     }
