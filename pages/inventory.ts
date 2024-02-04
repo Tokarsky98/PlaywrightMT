@@ -9,12 +9,12 @@ export class InventoryPage {
     constructor(page: Page) {
         this.page = page;
         this.productList = page.locator('.inventory_container');
-        this.burgerMenu = page.getByRole('button', { name: 'Open Menu' })
+        this.burgerMenu = page.getByRole('button', { name: 'Open Menu' });
         this.logoutLink = page.locator('#logout_sidebar_link');
     }
 
     async logout() {
         await this.burgerMenu.click();
         await this.logoutLink.click();
-      }
+    }
 }

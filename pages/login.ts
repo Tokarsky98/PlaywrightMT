@@ -7,15 +7,17 @@ export class LoginPage {
     readonly loginButton: Locator;
     readonly loginLogo: Locator;
     readonly errorMessage: Locator;
-    
+
     constructor(page: Page) {
         this.page = page;
         this.loginInput = page.getByTestId('username');
         this.passwordInput = page.getByTestId('password');
         this.loginButton = page.getByTestId('login-button'); // Would be better: page.getByRole('button', { name: 'login-button' });
-        this.loginLogo = page.locator('.login_logo').filter({ hasText: 'Swag Labs' });
+        this.loginLogo = page
+            .locator('.login_logo')
+            .filter({ hasText: 'Swag Labs' });
         this.errorMessage = page.getByTestId('error');
-    }   
+    }
 
     async login(login: string, password: string) {
         await this.page.goto('/');
