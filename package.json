@@ -1,6 +1,6 @@
 {
     "name": "e2e_tests",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Sample of E2E tests written in Playwright with typescript/javascript",
     "main": "login.spec.ts",
     "private": true,
