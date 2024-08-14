@@ -1,10 +1,12 @@
 import { Page } from 'playwright';
-import { LoginPage } from '../pages/login';
+import { Login } from '../pages/login';
 
 export const automatedLogin = async (page: Page): Promise<void> => {
-    const loginPage = new LoginPage(page);
+    const login = new Login(page);
+    const loginSection = login.loginSection;
+
     await page.goto('/');
-    await loginPage.loginInput.fill(process.env.LOGIN!);
-    await loginPage.passwordInput.fill(process.env.PASSWORD!);
-    await loginPage.loginButton.click();
+    await loginSection.loginInput.fill(process.env.LOGIN!);
+    await loginSection.passwordInput.fill(process.env.PASSWORD!);
+    await loginSection.loginButton.click();
 };
