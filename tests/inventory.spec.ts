@@ -1,10 +1,11 @@
 import { test } from '../fixtures/testFixtures';
 import { expect } from '@playwright/test';
-import { InventoryPage } from '../pages/inventory';
+import { Inventory } from '../pages/inventory';
 
 test('abcd', async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
+    const inventory = new Inventory(page);
+    const inventorySection = inventory.inventorySection;
 
     await page.goto('/inventory.html');
-    await expect(inventoryPage.productList).toBeVisible();
+    await expect(inventorySection.productList).toBeVisible();
 });

@@ -1,30 +1,34 @@
 import { test } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { Login } from '../pages/login';
-import { InventoryPage } from '../pages/inventory';
+import { Inventory } from '../pages/inventory';
 
 test('Login to the shop', async ({ page }) => {
     const login = new Login(page);
+    const inventory = new Inventory(page);
+
     const headerSection = login.headerSection;
     const loginSection = login.loginSection;
-    const inventoryPage = new InventoryPage(page);
+    const inventorySection = inventory.inventorySection;
 
     await login.goto();
     await expect(headerSection.loginLogo).toBeVisible();
 
     await loginSection.login(process.env.LOGIN!, process.env.PASSWORD!);
-    await expect(inventoryPage.productList).toBeVisible();
+    await expect(inventorySection.productList).toBeVisible();
 });
 
 test('Logout from the shop', async ({ page }) => {
     const login = new Login(page);
+    const inventory = new Inventory(page);
+
     const headerSection = login.headerSection;
     const loginSection = login.loginSection;
-    const inventoryPage = new InventoryPage(page);
+    const primaryHeaderSection = inventory.primaryHeaderSection;
 
     await login.goto();
     await loginSection.login(process.env.LOGIN!, process.env.PASSWORD!);
-    await inventoryPage.logout();
+    await primaryHeaderSection.logout();
     await expect(headerSection.loginLogo).toBeVisible();
 });
 
