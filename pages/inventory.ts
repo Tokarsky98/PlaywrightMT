@@ -1,41 +1,20 @@
 import { Locator, Page } from '@playwright/test';
-import { CommonHeaderSection } from './commonHeader';
 
-class SecondaryHeaderSection {
-    readonly titleSpan: Locator;
-    readonly filterSelect: Locator;
-
-    constructor(root: Locator) {
-        this.titleSpan = root.locator('.title');
-        this.filterSelect = root.locator('.product_sort_container');
-    }
-}
-class InventorySection {
-    readonly productList: Locator;
-
-    constructor(root: Locator) {
-        this.productList = root.locator('.inventory_list');
-    }
-}
-
-export class Inventory {
+export class InventoryPage {
     readonly page: Page;
-    readonly primaryHeaderSection: CommonHeaderSection;
-    readonly secondaryHeaderSection: SecondaryHeaderSection;
-    readonly inventorySection: InventorySection;
+    readonly productList: Locator;
+    readonly burgerMenu: Locator;
+    readonly logoutLink: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.primaryHeaderSection = new CommonHeaderSection(page);
-        this.secondaryHeaderSection = new SecondaryHeaderSection(
-            page.locator('.header_secondary_container'),
-        );
-        this.inventorySection = new InventorySection(
-            page.locator('#inventory_container'),
-        );
+        this.productList = page.locator('.inventory_container');
+        this.burgerMenu = page.getByRole('button', { name: 'Open Menu' });
+        this.logoutLink = page.locator('#logout_sidebar_link');
     }
 
-    async goto(): Promise<void> {
-        await this.page.goto('/inventory.html');
+    async logout(): Promise<void> {
+        await this.burgerMenu.click();
+        await this.logoutLink.click();
     }
 }
