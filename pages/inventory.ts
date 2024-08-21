@@ -1,12 +1,15 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { CommonHeaderSection } from './commonHeader';
+import { CheckoutStepTwo } from './checkoutStepTwo';
 
 class SecondaryHeaderSection {
     readonly titleSpan: Locator;
+    readonly filterActiveOption: Locator;
     readonly filterSelect: Locator;
 
     constructor(root: Locator) {
         this.titleSpan = root.locator('.title');
+        this.filterActiveOption = root.locator('.active_option');
         this.filterSelect = root.locator('.product_sort_container');
     }
 }
@@ -21,7 +24,9 @@ class InventorySection {
     async actionOnCart(
         action: 'add' | 'remove',
         itemNames: string[],
-    ): Promise<number> {
+    ): Promise<{ names: string[]; quantity: number }> {
+        const names: string[] = [];
+
         for (const itemName of itemNames) {
             const item = this.productList
                 .locator('.inventory_item')
@@ -36,6 +41,8 @@ class InventorySection {
 
                     await cartButton.click();
                     await expect(cartButton).toHaveText('Remove');
+
+                    names.push(itemName);
                 } else if (action === 'remove') {
                     await expect(cartButton).toHaveText('Remove');
 
@@ -46,7 +53,45 @@ class InventorySection {
                 throw new Error(`Item "${itemName}" not found!`);
             }
         }
-        return itemNames.length;
+        return { names, quantity: itemNames.length };
+    }
+
+    async calculateTotalPriceWithoutTax(itemNames: string[]): Promise<number> {
+        let totalPrice = 0;
+        for (const itemName of itemNames) {
+            const item = this.productList
+                .locator('.inventory_item')
+                .filter({ hasText: `${itemName}` });
+
+            const isItemVisible = await item.isVisible();
+            if (isItemVisible) {
+                const buttonName = await item.getByRole('button').innerText();
+
+                if (buttonName === 'Remove') {
+                    const priceText = await item
+                        .locator('.inventory_item_price')
+                        .innerText();
+                    const priceOfItem = parseFloat(priceText.replace('$', ''));
+                    totalPrice += priceOfItem;
+                } else {
+                    throw new Error(
+                        `Item "${itemName}" is not added to the cart!`,
+                    );
+                }
+            } else {
+                throw new Error(`Item "${itemName}" not found!`);
+            }
+        }
+        return totalPrice;
+    }
+
+    async getProductOrder(orderBy: 'name' | 'price'): Promise<string[][]> {
+        const products = await this.productList
+            .locator(`.inventory_item_${orderBy}`)
+            .all();
+        return Promise.all(
+            products.map((product) => product.allTextContents()),
+        );
     }
 }
 
@@ -69,5 +114,10 @@ export class Inventory {
 
     async goto(): Promise<void> {
         await this.page.goto('/inventory.html');
+    }
+
+    async goToCheckoutStepTwo(): Promise<CheckoutStepTwo> {
+        await this.page.goto('/checkout-step-two.html');
+        return new CheckoutStepTwo(this.page);
     }
 }
