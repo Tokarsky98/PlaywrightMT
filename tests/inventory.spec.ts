@@ -69,14 +69,13 @@ test('Check the total price of added items', async ({ page }) => {
     ).toHaveText(`Item total: $${totalPrice}`);
 });
 
-test('Check product sorting', async ({ page }) => {
+test('Check the sorting of items', async ({ page }) => {
     const inventory = new Inventory(page);
     const inventorySection = inventory.inventorySection;
     const secondaryHeaderSection = inventory.secondaryHeaderSection;
 
-    const originalOrderOfNames = await inventorySection.getProductOrder('name');
-    const originalOrderOfPrices =
-        await inventorySection.getProductOrder('price');
+    const originalOrderOfNames = await inventorySection.getItemsOrder('name');
+    const originalOrderOfPrices = await inventorySection.getItemsOrder('price');
 
     const sorting: {
         filter: string;
@@ -142,7 +141,7 @@ test('Check product sorting', async ({ page }) => {
             await secondaryHeaderSection.filterActiveOption.textContent();
         expect(selectedFilterText).toContain(filter);
 
-        const presentOrder = await inventorySection.getProductOrder(orderBy);
+        const presentOrder = await inventorySection.getItemsOrder(orderBy);
         expect(
             presentOrder,
             `Should have the expected order when filtered by: ${filter}`,
