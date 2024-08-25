@@ -85,13 +85,11 @@ class InventorySection {
         return totalPrice;
     }
 
-    async getProductOrder(orderBy: 'name' | 'price'): Promise<string[][]> {
-        const products = await this.productList
+    async getItemsOrder(orderBy: 'name' | 'price'): Promise<string[][]> {
+        const items = await this.productList
             .locator(`.inventory_item_${orderBy}`)
             .all();
-        return Promise.all(
-            products.map((product) => product.allTextContents()),
-        );
+        return Promise.all(items.map((item) => item.allTextContents()));
     }
 }
 
