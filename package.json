@@ -8,6 +8,7 @@
         "test": "playwright test",
         "format": "npx prettier --write .",
         "lint": "npx eslint . --ext .ts --max-warnings=0",
+        "tsc": "tsc --noEmit",
         "typedoc": "typedoc"
     },
     "author": "Mateusz Tokarski",
