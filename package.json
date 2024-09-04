@@ -17,20 +17,19 @@
     "devDependencies": {
         "@playwright/test": "^1.41.2",
         "@types/node": "^18.11.9",
-        "@types/serve-handler": "^6.1.1",
         "@typescript-eslint/eslint-plugin": "^6.20.0",
         "@typescript-eslint/parser": "^6.20.0",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
+        "eslint-import-resolver-typescript": "^3.6.3",
+        "eslint-plugin-jsdoc": "^50.2.2",
         "eslint-plugin-playwright": "^0.22.2",
         "eslint-plugin-prettier": "^5.1.3",
-        "prettier": "3.2.5",
-        "standard-version": "^9.5.0",
-        "typescript": "^5.1.3",
         "eslint-plugin-tsdoc": "^0.3.0",
-        "eslint-plugin-jsdoc": "^50.2.2",
+        "knip": "^5.24.3",
+        "prettier": "3.2.5",
         "typedoc": "^0.26.6",
-        "knip": "^5.24.3"
+        "typescript": "^5.1.3"
     },
     "dependencies": {
         "dotenv": "^16.3.1",
