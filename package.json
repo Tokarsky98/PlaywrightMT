@@ -9,6 +9,7 @@
         "format": "npx prettier --write .",
         "lint": "npx eslint . --ext .ts --max-warnings=0",
         "tsc": "tsc --noEmit",
+        "knip": "knip",
         "typedoc": "typedoc"
     },
     "author": "Mateusz Tokarski",
