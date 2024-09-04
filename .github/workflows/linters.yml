@@ -1,0 +1,24 @@
+---
+name: 'Tests: E2E linters'
+
+'on': [push]
+
+jobs:
+    tests_e2e:
+        name: Run linters
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: '20'
+            - name: Install dependencies
+              run: npm ci
+            - name: Lint
+              run: npm run lint
+            - name: Typecheck
+              run: npm run tsc
+            - name: Detect unused code
+              run: npm run knip
+            - name: Build API documentation
+              run: npm run typedoc

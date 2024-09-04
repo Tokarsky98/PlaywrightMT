@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { test } from '../fixtures/testFixtures';
 import { expect } from '@playwright/test';
 import { Cart } from '../pages/cart';

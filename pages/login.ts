@@ -1,13 +1,19 @@
 import { Locator, Page } from '@playwright/test';
 
+/** Header section. */
 class HeaderSection {
     readonly loginLogo: Locator;
 
+    /**
+     * Create the object.
+     * @param root - The locator of top-level element of section.
+     */
     constructor(root: Locator) {
         this.loginLogo = root.filter({ hasText: 'Swag Labs' });
     }
 }
 
+/** Login section. */
 class LoginSection {
     readonly loginInput: Locator;
     readonly passwordInput: Locator;
@@ -15,6 +21,10 @@ class LoginSection {
     readonly loginLogo: Locator;
     readonly errorMessage: Locator;
 
+    /**
+     * Create the object.
+     * @param root - The locator of top-level element of section.
+     */
     constructor(root: Locator) {
         this.loginInput = root.getByTestId('username');
         this.passwordInput = root.getByTestId('password');
@@ -25,6 +35,11 @@ class LoginSection {
         this.errorMessage = root.getByTestId('error');
     }
 
+    /**
+     * Log in to Swag Labs with certain credentials.
+     * @param login - String value of the login.
+     * @param password - String value of the password.
+     */
     async login(login: string, password: string): Promise<void> {
         await this.loginInput.fill(login);
         await this.passwordInput.fill(password);
@@ -32,11 +47,16 @@ class LoginSection {
     }
 }
 
+/** Login view. */
 export class Login {
     readonly page: Page;
     readonly headerSection: HeaderSection;
     readonly loginSection: LoginSection;
 
+    /**
+     * Create object.
+     * @param page - The object representing a single tab in the browser.
+     */
     constructor(page: Page) {
         this.page = page;
         this.headerSection = new HeaderSection(page.locator('.login_logo'));
@@ -45,6 +65,7 @@ export class Login {
         );
     }
 
+    /** Visit Cart page. */
     async goto(): Promise<void> {
         await this.page.goto('/');
     }
