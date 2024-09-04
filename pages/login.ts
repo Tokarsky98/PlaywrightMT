@@ -65,7 +65,7 @@ export class Login {
         );
     }
 
-    /** Visit Login page. */
+    /** Visit Cart page. */
     async goto(): Promise<void> {
         await this.page.goto('/');
     }

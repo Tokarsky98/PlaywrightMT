@@ -162,7 +162,7 @@ export class Inventory {
     }
 
     /**
-     *  Visit Checkout Step Two page (Overview).
+     * Visit Checkout Step Two page (Overview).
      * @returns Checkout Step Two object representing the opened Chekcout Step Two page.
      */
     async goToCheckoutStepTwo(): Promise<CheckoutStepTwo> {
