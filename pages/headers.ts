@@ -5,7 +5,7 @@ import { Cart } from './cart';
  * Header on the top of each page.
  * This class has several properties for managing view headers.
  */
-export class CommonHeaderSection {
+export class Header {
     readonly page: Page;
     readonly burgerMenu: Locator;
     readonly logoutLink: Locator;
@@ -38,5 +38,18 @@ export class CommonHeaderSection {
     async clickCartIcon(): Promise<Cart> {
         await this.cartIcon.click();
         return new Cart(this.page);
+    }
+}
+
+/** Secondary header on the top of each page. */
+export class SecondaryHeader {
+    readonly titleSpan: Locator;
+
+    /**
+     * Initializes the secondary header of the given browser tab.
+     * @param root - The locator of top-level element of section.
+     */
+    constructor(root: Locator) {
+        this.titleSpan = root.locator('.title');
     }
 }

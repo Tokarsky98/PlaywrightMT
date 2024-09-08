@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 
-/** Header section. */
-class HeaderSection {
+/** Header section of login page. */
+class Header {
     readonly loginLogo: Locator;
 
     /**
@@ -50,7 +50,7 @@ class LoginSection {
 /** Login view. */
 export class Login {
     readonly page: Page;
-    readonly headerSection: HeaderSection;
+    readonly header: Header;
     readonly loginSection: LoginSection;
 
     /**
@@ -59,7 +59,7 @@ export class Login {
      */
     constructor(page: Page) {
         this.page = page;
-        this.headerSection = new HeaderSection(page.locator('.login_logo'));
+        this.header = new Header(page.locator('.login_logo'));
         this.loginSection = new LoginSection(
             page.locator('div[class="login_wrapper-inner"]'),
         );
