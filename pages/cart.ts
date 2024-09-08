@@ -1,19 +1,6 @@
 import { Locator, Page } from '@playwright/test';
-import { CommonHeaderSection } from './commonHeader';
+import { Header, SecondaryHeader } from './headers';
 import { Inventory } from './inventory';
-
-/** Secondary header section. */
-class SecondaryHeaderSection {
-    readonly titleSpan: Locator;
-
-    /**
-     * Create the object.
-     * @param root - The locator of top-level element of section.
-     */
-    constructor(root: Locator) {
-        this.titleSpan = root.locator('.title');
-    }
-}
 
 /** Cart list section. */
 class CartListSection {
@@ -63,8 +50,8 @@ class CartListSection {
 /** Cart view. */
 export class Cart {
     readonly page: Page;
-    readonly primaryHeaderSection: CommonHeaderSection;
-    readonly secondaryHeaderSection: SecondaryHeaderSection;
+    readonly header: Header;
+    readonly secondaryHeader: SecondaryHeader;
     readonly cartListSection: CartListSection;
 
     /**
@@ -73,8 +60,8 @@ export class Cart {
      */
     constructor(page: Page) {
         this.page = page;
-        this.primaryHeaderSection = new CommonHeaderSection(page);
-        this.secondaryHeaderSection = new SecondaryHeaderSection(
+        this.header = new Header(page);
+        this.secondaryHeader = new SecondaryHeader(
             page.locator('.header_secondary_container'),
         );
         this.cartListSection = new CartListSection(

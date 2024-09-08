@@ -7,12 +7,12 @@ test('Login to the shop', async ({ page }) => {
     const login = new Login(page);
     const inventory = new Inventory(page);
 
-    const headerSection = login.headerSection;
+    const header = login.header;
     const loginSection = login.loginSection;
     const inventorySection = inventory.inventorySection;
 
     await login.goto();
-    await expect(headerSection.loginLogo).toBeVisible();
+    await expect(header.loginLogo).toBeVisible();
 
     await loginSection.login(process.env.LOGIN!, process.env.PASSWORD!);
     await expect(inventorySection.productList).toBeVisible();
@@ -22,14 +22,14 @@ test('Logout from the shop', async ({ page }) => {
     const login = new Login(page);
     const inventory = new Inventory(page);
 
-    const headerSection = login.headerSection;
+    const loginHeader = login.header;
     const loginSection = login.loginSection;
-    const primaryHeaderSection = inventory.primaryHeaderSection;
+    const header = inventory.header;
 
     await login.goto();
     await loginSection.login(process.env.LOGIN!, process.env.PASSWORD!);
-    await primaryHeaderSection.logout();
-    await expect(headerSection.loginLogo).toBeVisible();
+    await header.logout();
+    await expect(loginHeader.loginLogo).toBeVisible();
 });
 
 test('Login fail', async ({ page }) => {

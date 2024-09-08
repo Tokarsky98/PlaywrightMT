@@ -4,7 +4,7 @@ import { Inventory } from '../pages/inventory';
 
 test('Check addition and removal of items from the cart', async ({ page }) => {
     const inventory = new Inventory(page);
-    const primaryHeaderSection = inventory.primaryHeaderSection;
+    const header = inventory.header;
     const inventorySection = inventory.inventorySection;
 
     const firstItem = 'Sauce Labs Backpack';
@@ -18,12 +18,10 @@ test('Check addition and removal of items from the cart', async ({ page }) => {
         firstItem,
         secondItem,
     ]);
-    await expect(primaryHeaderSection.cartBagde).toBeVisible();
-    await expect(primaryHeaderSection.cartBagde).toHaveText(
-        `${addedItems.quantity}`,
-    );
+    await expect(header.cartBagde).toBeVisible();
+    await expect(header.cartBagde).toHaveText(`${addedItems.quantity}`);
 
-    const cartView = await primaryHeaderSection.clickCartIcon();
+    const cartView = await header.clickCartIcon();
     expect(await cartView.cartListSection.getNamesofItems()).toEqual([
         firstItem,
         secondItem,
@@ -38,9 +36,9 @@ test('Check addition and removal of items from the cart', async ({ page }) => {
         firstItem,
         secondItem,
     ]);
-    await expect(primaryHeaderSection.cartBagde).toBeHidden();
+    await expect(header.cartBagde).toBeHidden();
 
-    const cartViewAgain = await primaryHeaderSection.clickCartIcon();
+    const cartViewAgain = await header.clickCartIcon();
     expect(await cartViewAgain.cartListSection.getNamesofItems()).toEqual([]);
 });
 
@@ -72,7 +70,7 @@ test('Check the total price of added items', async ({ page }) => {
 test('Check the sorting of items', async ({ page }) => {
     const inventory = new Inventory(page);
     const inventorySection = inventory.inventorySection;
-    const secondaryHeaderSection = inventory.secondaryHeaderSection;
+    const secondaryHeader = inventory.secondaryHeader;
 
     const originalOrderOfNames = await inventorySection.getItemsOrder('name');
     const originalOrderOfPrices = await inventorySection.getItemsOrder('price');
@@ -133,12 +131,12 @@ test('Check the sorting of items', async ({ page }) => {
     ];
 
     for (const { filter, orderBy, expectedOrder } of sorting) {
-        await secondaryHeaderSection.filterSelect.selectOption({
+        await secondaryHeader.filterSelect.selectOption({
             label: filter,
         });
 
         const selectedFilterText =
-            await secondaryHeaderSection.filterActiveOption.textContent();
+            await secondaryHeader.filterActiveOption.textContent();
         expect(selectedFilterText).toContain(filter);
 
         const presentOrder = await inventorySection.getItemsOrder(orderBy);

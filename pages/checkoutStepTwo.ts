@@ -1,18 +1,5 @@
 import { Locator, Page } from '@playwright/test';
-import { CommonHeaderSection } from './commonHeader';
-
-/** Secondary header section. */
-class SecondaryHeaderSection {
-    readonly titleSpan: Locator;
-
-    /**
-     * Create the object.
-     * @param root - The locator of top-level element of section.
-     */
-    constructor(root: Locator) {
-        this.titleSpan = root.locator('.title');
-    }
-}
+import { Header, SecondaryHeader } from './headers';
 
 /** Checkout Step Two section. */
 class CheckoutStepTwoSection {
@@ -29,8 +16,8 @@ class CheckoutStepTwoSection {
 /** Checkout Step Two view. */
 export class CheckoutStepTwo {
     readonly page: Page;
-    readonly primaryHeaderSection: CommonHeaderSection;
-    readonly secondaryHeaderSection: SecondaryHeaderSection;
+    readonly header: Header;
+    readonly secondaryHeader: SecondaryHeader;
     readonly checkoutStepTwoSection: CheckoutStepTwoSection;
 
     /**
@@ -39,8 +26,8 @@ export class CheckoutStepTwo {
      */
     constructor(page: Page) {
         this.page = page;
-        this.primaryHeaderSection = new CommonHeaderSection(page);
-        this.secondaryHeaderSection = new SecondaryHeaderSection(
+        this.header = new Header(page);
+        this.secondaryHeader = new SecondaryHeader(
             page.locator('.header_secondary_container'),
         );
         this.checkoutStepTwoSection = new CheckoutStepTwoSection(

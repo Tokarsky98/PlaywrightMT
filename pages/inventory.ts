@@ -1,10 +1,9 @@
 import { expect, Locator, Page } from '@playwright/test';
-import { CommonHeaderSection } from './commonHeader';
+import { Header, SecondaryHeader } from './headers';
 import { CheckoutStepTwo } from './checkoutStepTwo';
 
-/** Secondary header section. */
-class SecondaryHeaderSection {
-    readonly titleSpan: Locator;
+/** Extended secondary header section. */
+class ExtendedSecondaryHeader extends SecondaryHeader {
     readonly filterActiveOption: Locator;
     readonly filterSelect: Locator;
 
@@ -13,7 +12,7 @@ class SecondaryHeaderSection {
      * @param root - The locator of top-level element of section.
      */
     constructor(root: Locator) {
-        this.titleSpan = root.locator('.title');
+        super(root);
         this.filterActiveOption = root.locator('.active_option');
         this.filterSelect = root.locator('.product_sort_container');
     }
@@ -137,8 +136,8 @@ class InventorySection {
 /** Inventory view. */
 export class Inventory {
     readonly page: Page;
-    readonly primaryHeaderSection: CommonHeaderSection;
-    readonly secondaryHeaderSection: SecondaryHeaderSection;
+    readonly header: Header;
+    readonly secondaryHeader: ExtendedSecondaryHeader;
     readonly inventorySection: InventorySection;
 
     /**
@@ -147,8 +146,8 @@ export class Inventory {
      */
     constructor(page: Page) {
         this.page = page;
-        this.primaryHeaderSection = new CommonHeaderSection(page);
-        this.secondaryHeaderSection = new SecondaryHeaderSection(
+        this.header = new Header(page);
+        this.secondaryHeader = new ExtendedSecondaryHeader(
             page.locator('.header_secondary_container'),
         );
         this.inventorySection = new InventorySection(
