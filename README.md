@@ -8,7 +8,7 @@ I have been writing tests in Playwright framework mostly, but I also have some b
 
 I would say that 60% of my time was taken by creating and maintaining the E2E tests. The rest of the time was devoted to other activities: creating test scenarios, verifying of requirements (QA), manual testing, reporting bugs, creating subtasks in Jira etc.
 
-I hope that checking the code and proposed solutions will be easy and pleasant. I appreciate every feedback and that you for yout time!
+I hope that checking the code and proposed solutions will be easy and pleasant. I appreciate every feedback and thank you for your time!
 
 ## Table of contents
 
@@ -59,13 +59,13 @@ To make sure if test is badly created or just flaky and requires other change:
 
 ## HTML Reports
 
-In tests on CI we use HTML reporter with trace viewer that trace only failed tests. If you want to use it, click on **Artifacts** section on the **PlaywrightMT** repository and then click on **playwright-report** to download **.zip** file. Later, extract the zip file into **playwright-report** folder (create it). After that you can open report with command:
+The tests on CI contains HTML reporter with trace viewer that trace only failed tests. If you want to use it, click on **Artifacts** section on the **PlaywrightMT** repository and then click on **playwright-report** to download **.zip** file. Later, extract the zip file into **playwright-report** folder (create it). After that you can open report with command:
 
     npx playwright show-report
 
 ## TypeDoc Documentation
 
-In this project we use the TypeDoc, a documentation generator for TypeScript.
+The project uses the TypeDoc, a documentation generator for TypeScript.
 
 Build separately written documentation by running:
 
@@ -105,12 +105,12 @@ Each function must have a top-level comment summarizing its purpose.
 
 ## Tips
 
-### Have independent tests
+#### Have independent tests
 
 Each test should be able to run on its own, or in a run of all or a subset of
 tests. This requires not depending on the presence of data from other tests.
 
-### Use page object models
+#### Use page object models
 
 See [the Playwright documentation](https://playwright.dev/docs/pom) and [Martin Fowler's
 explanation](https://www.martinfowler.com/bliki/PageObject.html). Their implementations are located in the `pages` subdirectory.
@@ -118,20 +118,20 @@ explanation](https://www.martinfowler.com/bliki/PageObject.html). Their implemen
 Tests should not directly use Playwright locators, instead accessing page object
 members.
 
-### Write descriptive tests
+#### Write descriptive tests
 
 It should be clear from test names and their steps what they do. Use code comments where needed.
 
-### Have assertions in tests
+#### Have assertions in tests
 
 Assertions should usually be included directly in the tests: both to see them when
 reading the test, and to have more easily debug them on failure.
 
-### Have clear names for functions
+#### Have clear names for functions
 
 Write imperative function names clearly showing what the function does or computes.
 
-### Use fixtures for data setup
+#### Use fixtures for data setup
 
 Create objects in [Playwright fixtures](https://playwright.dev/docs/test-fixtures).
 
@@ -146,26 +146,26 @@ This brings multiple benefits:
 When the fixture is used only for the side effect of creating an object and its return value is not used, then the test should use `/* eslint-disable
 @typescript-eslint/no-unused-vars */` as it has an unused parameter.
 
-### Parametrize fixtures by overriding data fixtures
+#### Parametrize fixtures by overriding data fixtures
 
 See <https://github.com/microsoft/playwright/issues/7065#issuecomment-862842235>.
 
-### Prefer API over the UI in fixtures and test setup
+#### Prefer API over the UI in fixtures and test setup
 
 Unless a test checks specific functionality, it should be accessed via the API for more reliability and faster test runs. This might involve custom APIs limited to staff users for use in E2E tests only.
 
-### Use locators matching how a user would find the element
+#### Use locators matching how a user would find the element
 
 E.g. form elements can usually be found via the
 [`getByRole`](https://playwright.dev/docs/locators#locate-by-role) method.
 
 Do not use random-looking class names when finding elements. Sometimes the difficulty of locating elements necessities changes in the application frontend.
 
-### Have consistent field names
+#### Have consistent field names
 
 Aim for the `nameType` format, e.g. `selectCheckbox`, `resetButton`. Do not abbreviate words like `button` (do not use `btn`).
 
-### Have appropriate naming of things
+#### Have appropriate naming of things
 
 To be consistent in writing the tests, there should be appropriate naming of things when it is possible:
 
