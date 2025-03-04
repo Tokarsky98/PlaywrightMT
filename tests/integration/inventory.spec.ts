@@ -1,16 +1,17 @@
-import { test } from '../../fixtures/testFixtures';
-import { expect } from '@playwright/test';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { expect, test } from '../../fixtures/merge.fixture';
 import { Inventory } from '../../pages/inventory.page';
 
 const firstItem = 'Sauce Labs Backpack';
 const secondItem = 'Sauce Labs Fleece Jacket';
 
-test('check addition and removal of items from the cart', async ({ page }) => {
-    const inventory = new Inventory(page);
-    const header = inventory.header;
-    const inventorySection = inventory.inventorySection;
-
-    // Automated login redirects the page to `/inventory.html`.
+test('check addition and removal of items from the cart', async ({
+    page,
+    automatedLogin,
+    inventoryPage,
+}) => {
+    const header = inventoryPage.header;
+    const inventorySection = inventoryPage.inventorySection;
 
     await expect(inventorySection.productList).toBeVisible();
 
@@ -43,11 +44,12 @@ test('check addition and removal of items from the cart', async ({ page }) => {
     expect(await cartViewAgain.cartListSection.getNamesOfItems()).toEqual([]);
 });
 
-test('check the total price of added items', async ({ page }) => {
-    const inventory = new Inventory(page);
-    const inventorySection = inventory.inventorySection;
-
-    // Automated login redirects the page to `/inventory.html`.
+test('check the total price of added items', async ({
+    page,
+    automatedLogin,
+    inventoryPage,
+}) => {
+    const inventorySection = inventoryPage.inventorySection;
 
     await expect(inventorySection.productList).toBeVisible();
 
@@ -60,18 +62,19 @@ test('check the total price of added items', async ({ page }) => {
         addedItems.names,
     );
 
-    const checkoutStepTwoView = await inventory.goToCheckoutStepTwo();
+    const checkoutStepTwoView = await inventoryPage.goToCheckoutStepTwo();
     await expect(
         checkoutStepTwoView.checkoutStepTwoSection.itemTotal,
     ).toHaveText(`Item total: $${totalPrice}`);
 });
 
-test('check the sorting of items', async ({ page }) => {
-    const inventory = new Inventory(page);
-    const inventorySection = inventory.inventorySection;
-    const secondaryHeader = inventory.secondaryHeader;
-
-    // Automated login redirects the page to `/inventory.html`.
+test('check the sorting of items', async ({
+    page,
+    automatedLogin,
+    inventoryPage,
+}) => {
+    const inventorySection = inventoryPage.inventorySection;
+    const secondaryHeader = inventoryPage.secondaryHeader;
 
     const originalOrderOfNames = await inventorySection.getItemsOrder('name');
     const originalOrderOfPrices = await inventorySection.getItemsOrder('price');

@@ -1,17 +1,20 @@
-import { test } from '../../fixtures/testFixtures';
-import { expect } from '@playwright/test';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { expect, test } from '../../fixtures/merge.fixture';
 import { Cart } from '../../pages/cart.page';
-import { Item } from '../../models/item';
+import { Item } from '../../models/item.model';
 
 test('check if item added by fixture appears in the cart', async ({
     page,
+    automatedLogin,
     item,
+    cartPage,
 }) => {
-    const cart = new Cart(page);
-    const cartListSection = cart.cartListSection;
+    const expectedTitle = 'Your Cart';
 
-    await page.goto('/cart.html');
-    expect(await cartListSection.getNamesOfItems()).toEqual([item.name]);
+    await expect(cartPage.secondaryHeader.titleSpan).toHaveText(expectedTitle);
+    expect(await cartPage.cartListSection.getNamesOfItems()).toEqual([
+        item.name,
+    ]);
 });
 
 test.describe('Test cart list with one item', () => {
@@ -21,14 +24,15 @@ test.describe('Test cart list with one item', () => {
 
     test('check if overwritten item added by fixture appears in the cart', async ({
         page,
+        automatedLogin,
         items,
+        cartPage,
     }) => {
-        const cart = new Cart(page);
-        const cartListSection = cart.cartListSection;
         const item = items[0];
 
-        await page.goto('/cart.html');
-        expect(await cartListSection.getNamesOfItems()).toEqual([item.name]);
+        expect(await cartPage.cartListSection.getNamesOfItems()).toEqual([
+            item.name,
+        ]);
     });
 });
 
@@ -42,13 +46,11 @@ test.describe('Test cart list with two items', () => {
 
     test('check if items added by fixture appear in the cart', async ({
         page,
+        automatedLogin,
         items,
+        cartPage,
     }) => {
-        const cart = new Cart(page);
-        const cartListSection = cart.cartListSection;
-
-        await page.goto('/cart.html');
-        expect(await cartListSection.getNamesOfItems()).toEqual([
+        expect(await cartPage.cartListSection.getNamesOfItems()).toEqual([
             items[0].name,
             items[1].name,
         ]);
