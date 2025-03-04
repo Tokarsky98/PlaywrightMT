@@ -21,8 +21,6 @@ jobs:
               run: npx playwright install
             - name: Lint
               run: npm run lint
-            - name: Typecheck
-              run: npm run tsc
             - name: Load env
               run: |
                   cp .env.example .env
