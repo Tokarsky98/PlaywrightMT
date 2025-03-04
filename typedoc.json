@@ -36,7 +36,7 @@
         "@typedef"
     ],
     "entryPointStrategy": "expand",
-    "entryPoints": ["./pages", "./models"],
+    "entryPoints": ["./src/pages", "./src/models"],
     "excludeExternals": true,
     "internalModule": "Internal",
     "plugin": ["typedoc-plugin-missing-exports"],

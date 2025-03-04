@@ -1,4 +1,4 @@
-import { expect, test } from '../../fixtures/merge.fixture';
+import { expect, test } from '@_src/fixtures/merge.fixture';
 
 const firstItem = 'Sauce Labs Backpack';
 const secondItem = 'Sauce Labs Fleece Jacket';

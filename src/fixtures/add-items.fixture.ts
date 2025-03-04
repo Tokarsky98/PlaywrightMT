@@ -1,6 +1,6 @@
-import { expect } from '@playwright/test';
 import { Item } from '../models/item.model';
 import { pageObjectTest } from './page-object.fixture';
+import { expect } from '@playwright/test';
 
 interface TestFixtures {
     itemsDetails: Item[];

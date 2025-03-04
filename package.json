@@ -1,21 +1,25 @@
 {
     "name": "e2e_tests",
     "version": "1.1.1",
-    "description": "Sample of E2E tests written in Playwright with typescript/javascript",
+    "description": "Sample of E2E tests written in Playwright",
     "main": "login.spec.ts",
     "private": true,
     "scripts": {
         "test": "playwright test",
+        "test:ui": "npm run test -- --ui",
+        "test:headed": "npm run test -- --headed",
+        "test:logged": "npx playwright test --grep \"@logged\"",
         "format": "npx prettier --write .",
         "lint": "npx eslint . --ext .ts --max-warnings=0",
         "tsc": "tsc --noEmit",
-        "typedoc": "typedoc"
+        "typedoc": "typedoc",
+        "show-report": "npx playwright show-report"
     },
     "author": "Mateusz Tokarski",
     "license": "ISC",
     "devDependencies": {
         "@playwright/test": "^1.41.2",
-        "@types/node": "^18.11.9",
+        "@types/node": "^22",
         "@typescript-eslint/eslint-plugin": "^6.20.0",
         "@typescript-eslint/parser": "^6.20.0",
         "eslint": "^8.56.0",
@@ -24,6 +28,7 @@
         "eslint-plugin-jsdoc": "^50.2.2",
         "eslint-plugin-playwright": "^0.22.2",
         "eslint-plugin-prettier": "^5.1.3",
+        "@trivago/prettier-plugin-sort-imports": "^4.3.0",
         "eslint-plugin-tsdoc": "^0.3.0",
         "prettier": "3.2.5",
         "typedoc": "^0.26.6",
