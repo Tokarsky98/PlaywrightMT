@@ -2,15 +2,16 @@ import { test } from '../../fixtures/testFixtures';
 import { expect } from '@playwright/test';
 import { Inventory } from '../../pages/inventory';
 
-test('Check addition and removal of items from the cart', async ({ page }) => {
+const firstItem = 'Sauce Labs Backpack';
+const secondItem = 'Sauce Labs Fleece Jacket';
+
+test('check addition and removal of items from the cart', async ({ page }) => {
     const inventory = new Inventory(page);
     const header = inventory.header;
     const inventorySection = inventory.inventorySection;
 
-    const firstItem = 'Sauce Labs Backpack';
-    const secondItem = 'Sauce Labs Fleece Jacket';
+    // Automated login redirects the page to `/inventory.html`.
 
-    await page.goto('/inventory.html');
     await expect(inventorySection.productList).toBeVisible();
 
     // Add items to the cart and check if they are there
@@ -18,11 +19,11 @@ test('Check addition and removal of items from the cart', async ({ page }) => {
         firstItem,
         secondItem,
     ]);
-    await expect(header.cartBagde).toBeVisible();
-    await expect(header.cartBagde).toHaveText(`${addedItems.quantity}`);
+    await expect(header.cartBadge).toBeVisible();
+    await expect(header.cartBadge).toHaveText(`${addedItems.quantity}`);
 
     const cartView = await header.clickCartIcon();
-    expect(await cartView.cartListSection.getNamesofItems()).toEqual([
+    expect(await cartView.cartListSection.getNamesOfItems()).toEqual([
         firstItem,
         secondItem,
     ]);
@@ -36,20 +37,18 @@ test('Check addition and removal of items from the cart', async ({ page }) => {
         firstItem,
         secondItem,
     ]);
-    await expect(header.cartBagde).toBeHidden();
+    await expect(header.cartBadge).toBeHidden();
 
     const cartViewAgain = await header.clickCartIcon();
-    expect(await cartViewAgain.cartListSection.getNamesofItems()).toEqual([]);
+    expect(await cartViewAgain.cartListSection.getNamesOfItems()).toEqual([]);
 });
 
-test('Check the total price of added items', async ({ page }) => {
+test('check the total price of added items', async ({ page }) => {
     const inventory = new Inventory(page);
     const inventorySection = inventory.inventorySection;
 
-    const firstItem = 'Sauce Labs Bolt T-Shirt';
-    const secondItem = 'Sauce Labs Fleece Jacket';
+    // Automated login redirects the page to `/inventory.html`.
 
-    await page.goto('/inventory.html');
     await expect(inventorySection.productList).toBeVisible();
 
     const addedItems = await inventorySection.actionOnCart('add', [
@@ -67,10 +66,12 @@ test('Check the total price of added items', async ({ page }) => {
     ).toHaveText(`Item total: $${totalPrice}`);
 });
 
-test('Check the sorting of items', async ({ page }) => {
+test('check the sorting of items', async ({ page }) => {
     const inventory = new Inventory(page);
     const inventorySection = inventory.inventorySection;
     const secondaryHeader = inventory.secondaryHeader;
+
+    // Automated login redirects the page to `/inventory.html`.
 
     const originalOrderOfNames = await inventorySection.getItemsOrder('name');
     const originalOrderOfPrices = await inventorySection.getItemsOrder('price');
