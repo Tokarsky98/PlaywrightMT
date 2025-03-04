@@ -1,5 +1,5 @@
-import { expect, test } from '../../src/fixtures/merge.fixture';
-import { Item } from '../../src/models/item.model';
+import { expect, test } from '@_src/fixtures/merge.fixture';
+import { Item } from '@_src/models/item.model';
 
 test('check if item added by fixture appears in the cart @logged', async ({
     item,

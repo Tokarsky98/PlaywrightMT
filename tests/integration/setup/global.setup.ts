@@ -1,5 +1,5 @@
+import { STORAGE_STATE } from '@_pw-config';
 import * as fs from 'fs';
-import { STORAGE_STATE } from '../../../playwright.config';
 
 /** Removes the existing STORAGE_STATE file if it exists. */
 function globalSetup(): void {

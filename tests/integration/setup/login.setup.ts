@@ -1,6 +1,6 @@
-import { STORAGE_STATE } from '../../../playwright.config';
-import { expect, test as setup } from './../../../src/fixtures/merge.fixture';
-import { standardUser } from '../../../src/test-data/login.data';
+import { STORAGE_STATE } from '@_pw-config';
+import { expect, test as setup } from '@_src/fixtures/merge.fixture';
+import { standardUser } from '@_src/test-data/login.data';
 
 setup('login and save session', async ({ page, loginPage }) => {
     const loginSection = loginPage.loginSection;

@@ -1,6 +1,6 @@
+import { BASE_URL } from '@_config/env.config';
 import { defineConfig, devices } from '@playwright/test';
 import * as path from 'path';
-import { BASE_URL } from './config/env.config';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
