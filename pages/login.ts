@@ -1,4 +1,6 @@
 import { Locator, Page } from '@playwright/test';
+import { LoginModel } from '../models/login.model';
+import { Inventory } from './inventory';
 
 /** Header section of login page. */
 class Header {
@@ -15,6 +17,7 @@ class Header {
 
 /** Login section. */
 class LoginSection {
+    readonly page: Page;
     readonly loginInput: Locator;
     readonly passwordInput: Locator;
     readonly loginButton: Locator;
@@ -23,9 +26,11 @@ class LoginSection {
 
     /**
      * Create the object.
+     * @param page - The object representing a single tab in the browser.
      * @param root - The locator of top-level element of section.
      */
-    constructor(root: Locator) {
+    constructor(page: Page, root: Locator) {
+        this.page = page;
         this.loginInput = root.getByTestId('username');
         this.passwordInput = root.getByTestId('password');
         this.loginButton = root.getByTestId('login-button');
@@ -37,13 +42,14 @@ class LoginSection {
 
     /**
      * Log in to Swag Labs with certain credentials.
-     * @param login - String value of the login.
-     * @param password - String value of the password.
+     * @param loginData - String values of username and password.
+     * @returns Page object for the inventory page.
      */
-    async login(login: string, password: string): Promise<void> {
-        await this.loginInput.fill(login);
-        await this.passwordInput.fill(password);
+    async login(loginData: LoginModel): Promise<Inventory> {
+        await this.loginInput.fill(loginData.username);
+        await this.passwordInput.fill(loginData.password);
         await this.loginButton.click();
+        return new Inventory(this.page);
     }
 }
 
@@ -61,6 +67,7 @@ export class Login {
         this.page = page;
         this.header = new Header(page.locator('.login_logo'));
         this.loginSection = new LoginSection(
+            page,
             page.locator('div[class="login_wrapper-inner"]'),
         );
     }

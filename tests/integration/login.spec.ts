@@ -1,44 +1,48 @@
 import { test } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { Login } from '../../pages/login';
-import { Inventory } from '../../pages/inventory';
+import { standardUser } from '../../test-data/login.data';
+import { LoginModel } from '../../models/login.model';
 
-test('Login to the shop', async ({ page }) => {
-    const login = new Login(page);
-    const inventory = new Inventory(page);
+test.describe('Verify login', () => {
+    test('login with correct credentials', async ({ page }) => {
+        const login = new Login(page);
 
-    const header = login.header;
-    const loginSection = login.loginSection;
-    const inventorySection = inventory.inventorySection;
+        const header = login.header;
+        const loginSection = login.loginSection;
 
-    await login.goto();
-    await expect(header.loginLogo).toBeVisible();
+        await login.goto();
+        await expect(header.loginLogo).toBeVisible();
 
-    await loginSection.login(process.env.LOGIN!, process.env.PASSWORD!);
-    await expect(inventorySection.productList).toBeVisible();
-});
+        const inventory = await loginSection.login(standardUser);
+        await expect(inventory.inventorySection.productList).toBeVisible();
+    });
 
-test('Logout from the shop', async ({ page }) => {
-    const login = new Login(page);
-    const inventory = new Inventory(page);
+    test('logout from the shop', async ({ page }) => {
+        const login = new Login(page);
 
-    const loginHeader = login.header;
-    const loginSection = login.loginSection;
-    const header = inventory.header;
+        const loginHeader = login.header;
+        const loginSection = login.loginSection;
 
-    await login.goto();
-    await loginSection.login(process.env.LOGIN!, process.env.PASSWORD!);
-    await header.logout();
-    await expect(loginHeader.loginLogo).toBeVisible();
-});
+        await login.goto();
+        const inventory = await loginSection.login(standardUser);
+        await inventory.header.logout();
+        await expect(loginHeader.loginLogo).toBeVisible();
+    });
 
-test('Login fail', async ({ page }) => {
-    const login = new Login(page);
-    const loginSection = login.loginSection;
-    const message =
-        'Username and password do not match any user in this service';
+    test('reject login with incorrect password fail', async ({ page }) => {
+        const login = new Login(page);
+        const loginSection = login.loginSection;
+        const expectedMessage =
+            'Username and password do not match any user in this service';
 
-    await login.goto();
-    await loginSection.login(process.env.LOGIN!, 'wrongPassword');
-    await expect(loginSection.errorMessage).toContainText(message);
+        const incorrectUserData: LoginModel = {
+            username: standardUser.username,
+            password: 'wrongPassword',
+        };
+
+        await login.goto();
+        await loginSection.login(incorrectUserData);
+        await expect(loginSection.errorMessage).toContainText(expectedMessage);
+    });
 });
