@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
-import { Header, SecondaryHeader } from './headers';
-import { Inventory } from './inventory';
+import { Header, SecondaryHeader } from '../components/headers.component';
+import { Inventory } from './inventory.page';
 
 /** Cart list section. */
 class CartListSection {
@@ -36,7 +36,7 @@ class CartListSection {
      * Get the names of all listed items in the cart.
      * @returns Array of string values representing the names of items in the cart.
      */
-    async getNamesofItems(): Promise<string[]> {
+    async getNamesOfItems(): Promise<string[]> {
         const names = await this.cartList.locator('.cart_item').all();
         const cartItemNames = await Promise.all(
             names.map(async (name) => {

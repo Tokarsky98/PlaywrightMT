@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
-import { Header, SecondaryHeader } from './headers';
-import { CheckoutStepTwo } from './checkoutStepTwo';
+import { Header, SecondaryHeader } from '../components/headers.component';
+import { CheckoutStepTwo } from './checkoutStepTwo.page';
 
 /** Extended secondary header section. */
 class ExtendedSecondaryHeader extends SecondaryHeader {
@@ -81,7 +81,7 @@ class InventorySection {
      * Calculate the total price of added items in the cart without tax.
      *
      * This method iterates over list of item names finds items on the product
-     * list and calculates their prices based on apperence in the cart.
+     * list and calculates their prices based on appearance in the cart.
      *
      * If item is not visible or its not in the cart (based on `Remove` button), the error occurs.
      * @param itemNames - Array of strings representing the names of items.
@@ -162,7 +162,7 @@ export class Inventory {
 
     /**
      * Visit Checkout Step Two page (Overview).
-     * @returns Checkout Step Two object representing the opened Chekcout Step Two page.
+     * @returns Checkout Step Two object representing the opened Checkout Step Two page.
      */
     async goToCheckoutStepTwo(): Promise<CheckoutStepTwo> {
         await this.page.goto('/checkout-step-two.html');
