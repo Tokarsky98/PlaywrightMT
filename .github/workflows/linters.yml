@@ -1,7 +1,11 @@
 ---
 name: 'Tests: E2E linters'
 
-'on': [push]
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 jobs:
     tests_e2e:

@@ -1,38 +1,98 @@
 name: Playwright Tests
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+  schedule:
+    - cron: "5 6 * * 1-5"
 
-'on': [push]
+permissions:
+  contents: read
+  checks: write
+  id-token: write
 
 jobs:
-    run_e2e:
-        timeout-minutes: 60
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                shard: [1, 2]
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 16
-            - name: Install dependencies
-              run: npm ci
-            - name: Install Playwright dependencies
-              run: npx playwright install
-            - name: Lint
-              run: npm run lint
-            - name: Typecheck
-              run: npm run tsc
-            - name: Load env
-              run: |
-                  cp .env.example .env
-                  cat .env >> $GITHUB_ENV
-            - name: Run tests
-              run: npm run test -- --retries=1 --shard ${{ matrix.shard }}/2
-              shell: bash
-            - uses: actions/upload-artifact@v4
-              if: always()
-              with:
-                  name: playwright-report-${{ matrix.shard }}
-                  path: ./playwright-report/
-                  retention-days: 30
+  prepare-env:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          registry-url: "https://npm.pkg.github.com"
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').devDependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+      - name: Cache playwright binaries
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: |
+            node_modules
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true' 
+        run: npm ci
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+  run_e2e:
+    needs: [prepare-env]
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          registry-url: "https://npm.pkg.github.com"
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').devDependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+      - name: Cache playwright binaries
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: |
+            node_modules
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Load env
+        run: |
+          cp .env.example .env
+          cat .env >> $GITHUB_ENV
+      - name: Run tests
+        run: npm run test -- --retries=1
+      - name: Archive test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-reports
+          path: |
+            playwright-report/**/*.*
+            test-results/**/*.*
+          retention-days: 7
+      - name: Publish all test report
+        if: success() || failure()
+        uses: mikepenz/action-junit-report@v5
+        with:
+          report_paths: "./playwright-report/results.xml"
