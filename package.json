@@ -11,6 +11,7 @@
         "test:logged": "npx playwright test --grep \"@logged\"",
         "format": "npx prettier --write .",
         "lint": "npx eslint . --ext .ts --max-warnings=0",
+        "tsc": "tsc --noEmit",
         "typedoc": "typedoc",
         "show-report": "npx playwright show-report"
     },
