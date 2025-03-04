@@ -1,43 +1,52 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
-import dotevn from 'dotenv';
-dotevn.config({
-    override: true,
-});
+import { defineConfig, devices } from '@playwright/test';
+import * as path from 'path';
+import { BASE_URL } from './config/env.config';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
+
+export const STORAGE_STATE = path.join(__dirname, 'tmp/session.json');
+export const RESPONSE_TIMEOUT = 10_000;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const config: PlaywrightTestConfig = {
+export default defineConfig({
     testDir: './tests',
     reporter: process.env.CI ? 'html' : 'list',
     fullyParallel: true,
     retries: 1,
     workers: 1,
-    timeout: 60 * 1000,
-    expect: { timeout: 15 * 1000 },
+    timeout: 45_000,
+    expect: { timeout: 10_000 },
     use: {
-        actionTimeout: 10 * 1000,
-        navigationTimeout: 15 * 1000,
+        actionTimeout: 10_000,
+        navigationTimeout: 15_000,
         testIdAttribute: 'data-test',
-        baseURL: 'https://www.saucedemo.com/',
+        baseURL: BASE_URL,
         trace: 'retain-on-failure',
         video: 'retain-on-failure',
         screenshot: 'only-on-failure',
     },
 
-    /* Configure projects for major browsers */
     projects: [
         {
-            name: 'chromium',
+            name: 'chromium-non-logged',
+            grepInvert: /@logged/,
             use: { ...devices['Desktop Chrome'] },
         },
-
-        // {
-        //     name: 'firefox',
-        //     use: { ...devices['Desktop Firefox'] },
-        // },
+        {
+            name: 'setup',
+            testMatch: '*.setup.ts',
+        },
+        {
+            name: 'chromium-logged',
+            grep: /@logged/,
+            dependencies: ['setup'],
+            use: {
+                ...devices['Desktop Chrome'],
+                storageState: STORAGE_STATE,
+            },
+        },
     ],
-};
-
-export default config;
+});
