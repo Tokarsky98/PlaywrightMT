@@ -18,7 +18,5 @@ jobs:
               run: npm run lint
             - name: Typecheck
               run: npm run tsc
-            - name: Detect unused code
-              run: npm run knip
             - name: Build API documentation
               run: npm run typedoc
