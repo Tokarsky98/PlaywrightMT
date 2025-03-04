@@ -13,7 +13,11 @@ export const RESPONSE_TIMEOUT = 10_000;
  */
 export default defineConfig({
     testDir: './tests',
-    reporter: process.env.CI ? 'html' : 'list',
+    reporter: [
+        ['html'],
+        ['json', { outputFile: './playwright-report/results.json' }],
+        ['junit', { outputFile: './playwright-report/results.xml' }],
+    ],
     fullyParallel: true,
     retries: 1,
     workers: 1,
