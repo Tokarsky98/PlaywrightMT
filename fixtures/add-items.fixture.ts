@@ -13,7 +13,12 @@ export const addItemsTest = pageObjectTest.extend<TestFixtures>({
     item: async ({ items }, use) => {
         await use(items[0]);
     },
-    items: async ({ page, itemsDetails }, use) => {
+    items: async ({ page, inventoryPage, itemsDetails }, use) => {
+        const expectedTitle = 'Products';
+        await expect(inventoryPage.secondaryHeader.titleSpan).toHaveText(
+            expectedTitle,
+        );
+
         const names: Item[] = [];
 
         for (const itemDetail of itemsDetails) {

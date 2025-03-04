@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { expect, test } from '../../fixtures/merge.fixture';
-import { Inventory } from '../../pages/inventory.page';
 
 const firstItem = 'Sauce Labs Backpack';
 const secondItem = 'Sauce Labs Fleece Jacket';
 
-test('check addition and removal of items from the cart', async ({
-    page,
-    automatedLogin,
+test('check addition and removal of items from the cart @logged', async ({
     inventoryPage,
 }) => {
     const header = inventoryPage.header;
@@ -44,9 +40,7 @@ test('check addition and removal of items from the cart', async ({
     expect(await cartViewAgain.cartListSection.getNamesOfItems()).toEqual([]);
 });
 
-test('check the total price of added items', async ({
-    page,
-    automatedLogin,
+test('check the total price of added items @logged', async ({
     inventoryPage,
 }) => {
     const inventorySection = inventoryPage.inventorySection;
@@ -68,11 +62,7 @@ test('check the total price of added items', async ({
     ).toHaveText(`Item total: $${totalPrice}`);
 });
 
-test('check the sorting of items', async ({
-    page,
-    automatedLogin,
-    inventoryPage,
-}) => {
+test('check the sorting of items @logged', async ({ inventoryPage }) => {
     const inventorySection = inventoryPage.inventorySection;
     const secondaryHeader = inventoryPage.secondaryHeader;
 

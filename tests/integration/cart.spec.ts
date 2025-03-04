@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { expect, test } from '../../fixtures/merge.fixture';
-import { Cart } from '../../pages/cart.page';
 import { Item } from '../../models/item.model';
 
-test('check if item added by fixture appears in the cart', async ({
-    page,
-    automatedLogin,
+test('check if item added by fixture appears in the cart @logged', async ({
     item,
     cartPage,
 }) => {
@@ -22,9 +18,7 @@ test.describe('Test cart list with one item', () => {
         itemsDetails: [new Item('Sauce Labs Onesie', 7.99)],
     });
 
-    test('check if overwritten item added by fixture appears in the cart', async ({
-        page,
-        automatedLogin,
+    test('check if overwritten item added by fixture appears in the cart @logged', async ({
         items,
         cartPage,
     }) => {
@@ -44,9 +38,7 @@ test.describe('Test cart list with two items', () => {
         ],
     });
 
-    test('check if items added by fixture appear in the cart', async ({
-        page,
-        automatedLogin,
+    test('check if items added by fixture appear in the cart @logged', async ({
         items,
         cartPage,
     }) => {
