@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { Cart } from '../../pages/cart';
 import { Item } from '../../models/item';
 
-test('Check if item added by fixture appears in the cart', async ({
+test('check if item added by fixture appears in the cart', async ({
     page,
     item,
 }) => {
@@ -19,7 +19,7 @@ test.describe('Test cart list with one item', () => {
         itemsDetails: [new Item('Sauce Labs Onesie', 7.99)],
     });
 
-    test('Check if overwritten item added by fixture appears in the cart', async ({
+    test('check if overwritten item added by fixture appears in the cart', async ({
         page,
         items,
     }) => {
@@ -40,7 +40,7 @@ test.describe('Test cart list with two items', () => {
         ],
     });
 
-    test('Check if items added by fixture appear in the cart', async ({
+    test('check if items added by fixture appear in the cart', async ({
         page,
         items,
     }) => {
