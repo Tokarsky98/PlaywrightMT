@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 import { expect } from '@playwright/test';
-import { Login } from '../../pages/login';
+import { Login } from '../../pages/login.page';
 import { standardUser } from '../../test-data/login.data';
 import { LoginModel } from '../../models/login.model';
 

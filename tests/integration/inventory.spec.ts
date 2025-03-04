@@ -1,6 +1,6 @@
 import { test } from '../../fixtures/testFixtures';
 import { expect } from '@playwright/test';
-import { Inventory } from '../../pages/inventory';
+import { Inventory } from '../../pages/inventory.page';
 
 const firstItem = 'Sauce Labs Backpack';
 const secondItem = 'Sauce Labs Fleece Jacket';

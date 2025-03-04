@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { Header, SecondaryHeader } from '../components/headers.component';
-import { Inventory } from './inventory';
+import { Inventory } from './inventory.page';
 
 /** Cart list section. */
 class CartListSection {

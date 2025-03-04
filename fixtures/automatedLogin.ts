@@ -1,5 +1,5 @@
 import { Page } from 'playwright';
-import { Login } from '../pages/login';
+import { Login } from '../pages/login.page';
 import { standardUser } from '../test-data/login.data';
 
 export const automatedLogin = async (page: Page): Promise<void> => {
