@@ -1,5 +1,5 @@
-import { Locator, Page } from '@playwright/test';
 import { Header, SecondaryHeader } from '../components/headers.component';
+import { Locator, Page } from '@playwright/test';
 
 /** Checkout Step Two section. */
 class CheckoutStepTwoSection {

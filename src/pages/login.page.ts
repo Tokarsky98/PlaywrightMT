@@ -1,6 +1,6 @@
-import { Locator, Page } from '@playwright/test';
 import { LoginModel } from '../models/login.model';
 import { Inventory } from './inventory.page';
+import { Locator, Page } from '@playwright/test';
 
 /** Header section of login page. */
 class Header {

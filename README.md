@@ -12,19 +12,19 @@ I hope that checking the code and proposed solutions will be easy and pleasant. 
 
 ## Table of contents
 
-- [Local recommended tools](#local-recommended-tools)
-- [Installation and setup](#installation-and-setup)
-- [Running the tests](#running-the-tests)
-- [Limitations](#limitations)
-- [HTML Reports](#html-reports)
-- [TypeDoc Documentation](#typedoc-documentation)
-- [Tips](#tips)
+-   [Local recommended tools](#local-recommended-tools)
+-   [Installation and setup](#installation-and-setup)
+-   [Running the tests](#running-the-tests)
+-   [Limitations](#limitations)
+-   [HTML Reports](#html-reports)
+-   [TypeDoc Documentation](#typedoc-documentation)
+-   [Tips](#tips)
 
 ## Local recommended tools
 
-- [Github](https://github.com/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Node JS](https://nodejs.org/en/)
+-   [Github](https://github.com/)
+-   [Visual Studio Code](https://code.visualstudio.com/)
+-   [Node JS](https://nodejs.org/en/)
 
 ## Installation and setup
 
@@ -37,29 +37,29 @@ I hope that checking the code and proposed solutions will be easy and pleasant. 
 
 To run all tests at once:
 
-- `npm run test`
+-   `npm run test`
 
 To run tests in headed mode with a debugger stopped at the start of each test:
 
-- `npm run test -- --debug`
+-   `npm run test -- --debug`
 
 To run tests only on Chromium:
 
-- `npm run test -- --project=chromium`
+-   `npm run test -- --project=chromium-logged`
 
 To run single test using its title:
 
-- `npm run test -- -g 'test-title'`
+-   `npm run test -- -g 'test-title'`
 
 To make sure if test is badly created or just flaky and requires other change:
 
-- `npm run test -- -g 'test-title' --retries=1`
+-   `npm run test -- -g 'test-title' --retries=1`
 
 For more usage cases look in `package.json` scripts section.
 
 ## Limitations
 
-- `.env.example` file has valid login and password. On `https://www.saucedemo.com/` website you can find other credentials but for now they are configured for `standard_user`.
+-   `.env.example` file has valid login and password. On `https://www.saucedemo.com/` website you can find other credentials but for now they are configured for `standard_user`.
 
 ## HTML Reports
 
@@ -79,33 +79,33 @@ then open the `docs/index.html` file in your browser. For more information see [
 
 Overall documentation standards in this project:
 
-- Ensure comments are concise and to the point.
-- Use proper grammar and punctuation for readability.
-- Maintain consistent formatting across all comments for uniformity.
-- When describing a parameter using the `@param` e.g. an argument of a function, use a hyphen after the parameter name before the short role description.
-- All the documentation comments must start with the capital letter.
-- Use `/** */` to enclose a documentation comment.
+-   Ensure comments are concise and to the point.
+-   Use proper grammar and punctuation for readability.
+-   Maintain consistent formatting across all comments for uniformity.
+-   When describing a parameter using the `@param` e.g. an argument of a function, use a hyphen after the parameter name before the short role description.
+-   All the documentation comments must start with the capital letter.
+-   Use `/** */` to enclose a documentation comment.
 
 ### Classes
 
 Every class must have a top-level comment describing its overall purpose and usage.
 
-- Class properties are self-explanatory, they don't require special documentation unless there is a need for one.
-- The class constructor should be documented with a brief description of its role. Use `@param` tags for each parameter, including short text explaining their purpose.
-- All other class methods must be documented:
-  - Provide a brief summary of the method’s functionality.
-  - Use `@param` tags to describe each parameter’s purpose.
-  - When a method returns a value, use `@returns` tag to describe the return value and its type.
-  - Include additional notes or special cases in the method comment if necessary.
+-   Class properties are self-explanatory, they don't require special documentation unless there is a need for one.
+-   The class constructor should be documented with a brief description of its role. Use `@param` tags for each parameter, including short text explaining their purpose.
+-   All other class methods must be documented:
+    -   Provide a brief summary of the method’s functionality.
+    -   Use `@param` tags to describe each parameter’s purpose.
+    -   When a method returns a value, use `@returns` tag to describe the return value and its type.
+    -   Include additional notes or special cases in the method comment if necessary.
 
 #### Functions
 
 Each function must have a top-level comment summarizing its purpose.
 
-- Document all parameters using `@param` tags. Include the parameter name and purpose.
-- When a function returns a value, document the return value using `@returns` tag.
-- Provide an example of how the function works if necessary. Such section should start with the `@example` tag.
-- Include additional notes or special cases in the method comment if necessary.
+-   Document all parameters using `@param` tags. Include the parameter name and purpose.
+-   When a function returns a value, document the return value using `@returns` tag.
+-   Provide an example of how the function works if necessary. Such section should start with the `@example` tag.
+-   Include additional notes or special cases in the method comment if necessary.
 
 ## Tips
 
@@ -141,10 +141,10 @@ Create objects in [Playwright fixtures](https://playwright.dev/docs/test-fixture
 
 This brings multiple benefits:
 
-- tests are shorter
-- reusable setup is shared between multiple tests
-- data created for a test gets deleted by the fixture when finalizing regardless of it passing or failing (`DELETE` API request)
-- not hardcoding values (e.g. IDs or names of objects) that can be returned by the fixture
+-   tests are shorter
+-   reusable setup is shared between multiple tests
+-   data created for a test gets deleted by the fixture when finalizing regardless of it passing or failing (`DELETE` API request)
+-   not hardcoding values (e.g. IDs or names of objects) that can be returned by the fixture
 
 When the fixture is used only for the side effect of creating an object and its return value is not used, then the test should use `/* eslint-disable @typescript-eslint/no-unused-vars */` as it has an unused parameter.
 
@@ -171,8 +171,7 @@ Aim for the `nameType` format, e.g. `selectCheckbox`, `resetButton`. Do not abbr
 
 To be consistent in writing the tests, there should be appropriate naming of things when it is possible:
 
-- file names should suggest the feature/view that is being tested within them
-- fixture names in tests:
-  - singular form - for a fixture not returning an array of multiple things that the test cares about
-  - plural form - for fixtures returning arrays, having zero or more objects that the test uses (or produces by overriding the fixture).
-  
+-   file names should suggest the feature/view that is being tested within them
+-   fixture names in tests:
+    -   singular form - for a fixture not returning an array of multiple things that the test cares about
+    -   plural form - for fixtures returning arrays, having zero or more objects that the test uses (or produces by overriding the fixture).

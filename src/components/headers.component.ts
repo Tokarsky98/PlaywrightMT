@@ -1,5 +1,5 @@
-import { Locator, Page } from '@playwright/test';
 import { Cart } from '../pages/cart.page';
+import { Locator, Page } from '@playwright/test';
 
 /**
  * Header on the top of each page.
