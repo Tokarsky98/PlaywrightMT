@@ -52,10 +52,6 @@ jobs:
     needs: [prepare-env]
     timeout-minutes: 5
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -85,12 +81,12 @@ jobs:
           cp .env.example .env
           cat .env >> $GITHUB_ENV
       - name: Run tests
-        run: npm run test -- --retries=1 --shard ${{ matrix.shard }}/2
+        run: npm run test -- --retries=1
       - name: Archive test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report-${{ matrix.shard }}
+          name: playwright-reports
           path: |
             playwright-report/**/*.*
             test-results/**/*.*
