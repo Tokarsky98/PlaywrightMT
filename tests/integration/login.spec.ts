@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import { expect } from '@playwright/test';
-import { Login } from '../pages/login';
-import { Inventory } from '../pages/inventory';
+import { Login } from '../../pages/login';
+import { Inventory } from '../../pages/inventory';
 
 test('Login to the shop', async ({ page }) => {
     const login = new Login(page);

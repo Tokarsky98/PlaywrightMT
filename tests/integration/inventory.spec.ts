@@ -1,6 +1,6 @@
-import { test } from '../fixtures/testFixtures';
+import { test } from '../../fixtures/testFixtures';
 import { expect } from '@playwright/test';
-import { Inventory } from '../pages/inventory';
+import { Inventory } from '../../pages/inventory';
 
 test('Check addition and removal of items from the cart', async ({ page }) => {
     const inventory = new Inventory(page);

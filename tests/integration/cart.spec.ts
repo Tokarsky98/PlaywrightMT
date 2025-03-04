@@ -1,7 +1,7 @@
-import { test } from '../fixtures/testFixtures';
+import { test } from '../../fixtures/testFixtures';
 import { expect } from '@playwright/test';
-import { Cart } from '../pages/cart';
-import { Item } from '../models/item';
+import { Cart } from '../../pages/cart';
+import { Item } from '../../models/item';
 
 test('Check if item added by fixture appears in the cart', async ({
     page,
