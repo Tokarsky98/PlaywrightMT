@@ -10,7 +10,7 @@ export class Header {
     readonly burgerMenu: Locator;
     readonly logoutLink: Locator;
     readonly cartIcon: Locator;
-    readonly cartBagde: Locator;
+    readonly cartBadge: Locator;
 
     /**
      * Initializes the header of the given browser tab.
@@ -22,7 +22,7 @@ export class Header {
         this.burgerMenu = header.getByRole('button', { name: 'Open Menu' });
         this.logoutLink = header.locator('#logout_sidebar_link');
         this.cartIcon = header.locator('.shopping_cart_link');
-        this.cartBagde = header.locator('.shopping_cart_badge');
+        this.cartBadge = header.locator('.shopping_cart_badge');
     }
 
     /** Log out of the Swag Labs shop. */

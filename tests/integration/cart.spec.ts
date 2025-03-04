@@ -11,7 +11,7 @@ test('check if item added by fixture appears in the cart', async ({
     const cartListSection = cart.cartListSection;
 
     await page.goto('/cart.html');
-    expect(await cartListSection.getNamesofItems()).toEqual([item.name]);
+    expect(await cartListSection.getNamesOfItems()).toEqual([item.name]);
 });
 
 test.describe('Test cart list with one item', () => {
@@ -28,7 +28,7 @@ test.describe('Test cart list with one item', () => {
         const item = items[0];
 
         await page.goto('/cart.html');
-        expect(await cartListSection.getNamesofItems()).toEqual([item.name]);
+        expect(await cartListSection.getNamesOfItems()).toEqual([item.name]);
     });
 });
 
@@ -48,7 +48,7 @@ test.describe('Test cart list with two items', () => {
         const cartListSection = cart.cartListSection;
 
         await page.goto('/cart.html');
-        expect(await cartListSection.getNamesofItems()).toEqual([
+        expect(await cartListSection.getNamesOfItems()).toEqual([
             items[0].name,
             items[1].name,
         ]);
