@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
-import { Header, SecondaryHeader } from './headers';
+import { Header, SecondaryHeader } from '../components/headers.component';
 import { CheckoutStepTwo } from './checkoutStepTwo';
 
 /** Extended secondary header section. */
