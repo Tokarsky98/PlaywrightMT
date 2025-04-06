@@ -3,51 +3,55 @@ import { pageObjectTest } from './page-object.fixture';
 import { expect } from '@playwright/test';
 
 interface TestFixtures {
-    itemsDetails: Item[];
+    itemsDetails: Item[][];
     item: Item;
     items: Item[];
 }
 
 export const addItemsTest = pageObjectTest.extend<TestFixtures>({
-    itemsDetails: [new Item()],
+    // Nested array structure
+    itemsDetails: [[new Item()]],
+
+    // Simplified access to first item
     item: async ({ items }, use) => {
         await use(items[0]);
     },
+
+    // Add items to cart and return the successfully added items
     items: async ({ page, inventoryPage, itemsDetails }, use) => {
         const expectedTitle = 'Products';
         await expect(inventoryPage.secondaryHeader.titleSpan).toHaveText(
             expectedTitle,
         );
 
-        const names: Item[] = [];
+        const addedItems: Item[] = [];
 
-        for (const itemDetail of itemsDetails) {
+        // Keep the flattening operation to maintain compatibility
+        const flattenedItemsDetails = itemsDetails.flat();
+
+        for (const itemDetail of flattenedItemsDetails) {
             const item = page
                 .locator('.inventory_item')
-                .filter({ hasText: `${itemDetail.name}` });
+                .filter({ hasText: itemDetail.name });
 
             const priceOfItem = item
                 .locator('.inventory_item_price')
                 .filter({ hasText: `$${itemDetail.price}` });
 
-            const isItemVisible = await item.isVisible();
-            const isPriceVisible = await priceOfItem.isVisible();
+            // Verify item exists with correct price
+            await expect(item).toBeVisible();
+            await expect(priceOfItem).toBeVisible();
 
-            if (isItemVisible && isPriceVisible) {
-                const cartButton = item.getByRole('button');
-                await expect(cartButton).toHaveText('Add to cart');
+            // Add to cart
+            const cartButton = item.getByRole('button');
+            await expect(cartButton).toHaveText('Add to cart');
+            await cartButton.click();
+            await expect(cartButton).toHaveText('Remove');
 
-                await cartButton.click();
-                await expect(cartButton).toHaveText('Remove');
-
-                names.push(new Item(itemDetail.name, itemDetail.price));
-            } else {
-                throw new Error(
-                    `Item "${itemDetail.name}" with price "$${itemDetail.price}" is incorrect or not visible!`,
-                );
-            }
+            // Track added item
+            addedItems.push(new Item(itemDetail.name, itemDetail.price));
         }
 
-        await use(names);
+        await use(addedItems);
     },
 });
