@@ -11,6 +11,7 @@ COPY src/ ./src/
 COPY config/ ./config/
 COPY playwright.config.ts ./
 COPY tsconfig.json ./
-COPY .env ./
+
+COPY .env.example .env
 
 ENTRYPOINT ["npm", "test"]
