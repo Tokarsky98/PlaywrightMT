@@ -1,5 +1,6 @@
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import { LoginModel } from '@_src/models/login.model';
+import { errorMessages } from '@_src/test-data/error-messages.data';
 import { standardUser } from '@_src/test-data/login.data';
 
 test.describe('Verify login', () => {
@@ -24,8 +25,6 @@ test.describe('Verify login', () => {
 
     test('reject login with incorrect password', async ({ loginPage }) => {
         const loginSection = loginPage.loginSection;
-        const expectedMessage =
-            'Username and password do not match any user in this service';
 
         const incorrectUserData: LoginModel = {
             username: standardUser.username,
@@ -33,6 +32,8 @@ test.describe('Verify login', () => {
         };
 
         await loginSection.login(incorrectUserData);
-        await expect(loginSection.errorMessage).toContainText(expectedMessage);
+        await expect(loginSection.errorMessage).toContainText(
+            errorMessages.invalidCredentials,
+        );
     });
 });

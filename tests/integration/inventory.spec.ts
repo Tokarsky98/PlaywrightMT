@@ -1,7 +1,7 @@
 import { expect, test } from '@_src/fixtures/merge.fixture';
+import { itemPairs } from '@_src/test-data/inventory.data';
 
-const firstItem = 'Sauce Labs Backpack';
-const secondItem = 'Sauce Labs Fleece Jacket';
+const { twoItems } = itemPairs;
 
 test('check addition and removal of items from the cart @logged', async ({
     inventoryPage,
@@ -12,28 +12,19 @@ test('check addition and removal of items from the cart @logged', async ({
     await expect(inventorySection.productList).toBeVisible();
 
     // Add items to the cart and check if they are there
-    const addedItems = await inventorySection.actionOnCart('add', [
-        firstItem,
-        secondItem,
-    ]);
+    const addedItems = await inventorySection.actionOnCart('add', twoItems);
     await expect(header.cartBadge).toBeVisible();
     await expect(header.cartBadge).toHaveText(`${addedItems.quantity}`);
 
     const cartView = await header.clickCartIcon();
-    expect(await cartView.cartListSection.getNamesOfItems()).toEqual([
-        firstItem,
-        secondItem,
-    ]);
+    expect(await cartView.cartListSection.getNamesOfItems()).toEqual(twoItems);
 
     // Back to the `Inventory` view
     const inventoryView =
         await cartView.cartListSection.clickContinueShoppingButton();
 
     // Remove items from the cart and check if they are no longer there
-    await inventoryView.inventorySection.actionOnCart('remove', [
-        firstItem,
-        secondItem,
-    ]);
+    await inventoryView.inventorySection.actionOnCart('remove', twoItems);
     await expect(header.cartBadge).toBeHidden();
 
     const cartViewAgain = await header.clickCartIcon();
@@ -47,10 +38,7 @@ test('check the total price of added items @logged', async ({
 
     await expect(inventorySection.productList).toBeVisible();
 
-    const addedItems = await inventorySection.actionOnCart('add', [
-        firstItem,
-        secondItem,
-    ]);
+    const addedItems = await inventorySection.actionOnCart('add', twoItems);
 
     const totalPrice = await inventorySection.calculateTotalPriceWithoutTax(
         addedItems.names,
