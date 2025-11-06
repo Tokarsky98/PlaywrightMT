@@ -155,7 +155,7 @@ Each function must have a top-level comment summarizing its purpose.
 
 ## Tips
 
-### Have independent tests
+#### Have independent tests
 
 Each test should be able to run on its own, or in a run of all or a subset of
 tests. This requires not depending on the presence of data from other tests.
