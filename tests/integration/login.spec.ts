@@ -5,8 +5,7 @@ import { standardUser } from '@_src/test-data/login.data';
 
 test.describe('Verify login', () => {
     test('login with correct credentials', async ({ loginPage }) => {
-        const header = loginPage.header;
-        const loginSection = loginPage.loginSection;
+        const { header, loginSection } = loginPage;
 
         await expect(header.loginLogo).toBeVisible();
 
@@ -15,12 +14,11 @@ test.describe('Verify login', () => {
     });
 
     test('logout from the shop', async ({ loginPage }) => {
-        const loginHeader = loginPage.header;
-        const loginSection = loginPage.loginSection;
+        const { header, loginSection } = loginPage;
 
         const inventory = await loginSection.login(standardUser);
         await inventory.header.logout();
-        await expect(loginHeader.loginLogo).toBeVisible();
+        await expect(header.loginLogo).toBeVisible();
     });
 
     test('reject login with incorrect password', async ({ loginPage }) => {

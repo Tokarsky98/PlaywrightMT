@@ -6,8 +6,7 @@ const { twoItems } = itemPairs;
 test('check addition and removal of items from the cart @logged', async ({
     inventoryPage,
 }) => {
-    const header = inventoryPage.header;
-    const inventorySection = inventoryPage.inventorySection;
+    const { header, inventorySection } = inventoryPage;
 
     await expect(inventorySection.productList).toBeVisible();
 
@@ -51,8 +50,7 @@ test('check the total price of added items @logged', async ({
 });
 
 test('check the sorting of items @logged', async ({ inventoryPage }) => {
-    const inventorySection = inventoryPage.inventorySection;
-    const secondaryHeader = inventoryPage.secondaryHeader;
+    const { inventorySection, secondaryHeader } = inventoryPage;
 
     const originalOrderOfNames = await inventorySection.getItemsOrder('name');
     const originalOrderOfPrices = await inventorySection.getItemsOrder('price');
