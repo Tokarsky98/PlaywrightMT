@@ -3,8 +3,10 @@ import { LoginModel } from '@_src/models/login.model';
 import { errorMessages } from '@_src/test-data/error-messages.data';
 import { standardUser } from '@_src/test-data/login.data';
 
-test.describe('Verify login', () => {
-    test('login with correct credentials', async ({ loginPage }) => {
+test.describe('Login functionality', () => {
+    test('should successfully login with valid credentials and display inventory', async ({
+        loginPage,
+    }) => {
         const { header, loginSection } = loginPage;
 
         await expect(header.loginLogo).toBeVisible();
@@ -13,7 +15,9 @@ test.describe('Verify login', () => {
         await expect(inventory.inventorySection.productList).toBeVisible();
     });
 
-    test('logout from the shop', async ({ loginPage }) => {
+    test('should successfully logout and return to login page', async ({
+        loginPage,
+    }) => {
         const { header, loginSection } = loginPage;
 
         const inventory = await loginSection.login(standardUser);
@@ -21,7 +25,9 @@ test.describe('Verify login', () => {
         await expect(header.loginLogo).toBeVisible();
     });
 
-    test('reject login with incorrect password', async ({ loginPage }) => {
+    test('should reject login with incorrect password and show error message', async ({
+        loginPage,
+    }) => {
         const loginSection = loginPage.loginSection;
 
         const incorrectUserData: LoginModel = {
