@@ -22,7 +22,7 @@ test.describe('Verify login', () => {
         await expect(loginHeader.loginLogo).toBeVisible();
     });
 
-    test('reject login with incorrect password fail', async ({ loginPage }) => {
+    test('reject login with incorrect password', async ({ loginPage }) => {
         const loginSection = loginPage.loginSection;
         const expectedMessage =
             'Username and password do not match any user in this service';
