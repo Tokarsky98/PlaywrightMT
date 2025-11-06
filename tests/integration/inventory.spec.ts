@@ -1,9 +1,9 @@
 import { expect, test } from '@_src/fixtures/merge.fixture';
-import { itemPairs } from '@_src/test-data/inventory.data';
-
-const { twoItems } = itemPairs;
+import { itemPairs, testItems } from '@_src/test-data/inventory.data';
 
 test.describe('Inventory - Cart Operations', () => {
+    const { twoItems } = itemPairs;
+
     test('should add and remove items from the cart @logged', async ({
         inventoryPage,
     }) => {
@@ -52,6 +52,32 @@ test.describe('Inventory - Cart Operations', () => {
         await expect(
             checkoutStepTwoView.checkoutStepTwoSection.itemTotal,
         ).toHaveText(`Item total: $${totalPrice}`);
+    });
+
+    test.describe('Edge cases', () => {
+        test('should maintain cart state after browser refresh @logged', async ({
+            inventoryPage,
+            page,
+        }) => {
+            const { header, inventorySection } = inventoryPage;
+            const itemsToAdd = [testItems.backpack];
+
+            // Add item to cart
+            await inventorySection.actionOnCart('add', itemsToAdd);
+            await expect(header.cartBadge).toHaveText('1');
+
+            // Refresh the page
+            await page.reload();
+
+            // Cart should still have the item
+            await expect(header.cartBadge).toHaveText('1');
+
+            const cartView = await header.clickCartIcon();
+            const cartItems = await cartView.cartListSection.getNamesOfItems();
+            expect(cartItems, 'Cart should persist after refresh').toEqual(
+                itemsToAdd,
+            );
+        });
     });
 });
 
